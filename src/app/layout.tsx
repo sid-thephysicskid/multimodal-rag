@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { ErrorBoundary } from '@/components/error-boundary';
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+  src: [
+    {
+      path: './fonts/GeistVF.woff2',
+      weight: '100 900',
+      style: 'normal',
+    },
+  ],
+  fallback: ['system-ui', 'arial'],
+  variable: '--font-geist-sans',
 });
 const geistMono = localFont({
   src: "./fonts/GeistMonoVF.woff",
@@ -28,7 +35,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ErrorBoundary>
+          {children}
+        </ErrorBoundary>
       </body>
     </html>
   );
